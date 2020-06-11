@@ -1,0 +1,55 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+    <div class="card">
+
+        <section 
+            class="avatar" 
+            style="max-height: 575px; background: url(member.avatar_url) no-repeat center center / cover">
+        </section>
+
+        <section class="members details edit">
+
+
+            <form method="POST" action="/members?_method=PUT">
+            
+
+
+                <div class="title">
+                    <h3>Editar membro</h3>
+                    <a href="/members"><img src="/arrow-left.svg" alt=""></a>
+                </div>
+
+                {% include 'members/fields.njk' %}
+
+                <input 
+                type="hidden" 
+                name="id" 
+                value={{member.id}}
+                >
+            </form>
+
+            <form id="form-delete" action="/members?_method=DELETE" method="post">
+                <input type="hidden" name="id" value={{member.id}}>
+                <button type="submit" class="member">Deletar</button>
+            </form>
+
+            <script>
+            
+                const formDelete = document.querySelector("#form-delete")
+                formDelete.addEventListener("submit", function(event){
+                    const confirmation = confirm("Deseja realmente deletar?")
+
+                    if(!confirmation) {
+                        event.preventDefault()
+                    }
+                })
+            
+            </script>
+        
+        </section>   
+
+    </div>
+
+{% endblock content %}

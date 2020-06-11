@@ -1,0 +1,81 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+    <div class="table-container">
+        <div class="table-title">
+            <p></p>
+            <p>Instrutor</p>
+            <p>Atendimento</p>
+            <p>Alunos</p>
+            <div class="icon-table-title">
+                <div class="no-filter">
+                    <p><a href="/instructors/create"><img src="plus-square.svg" alt=""></a></p>
+                    <p><img src="filter.svg" alt="" onclick="toggleFilter()"></p>
+                </div>
+                <div class="filter filter-on">
+                    <form action="/instructors" method="GET">
+                        <input type="text" 
+                        name="filter" 
+                        placeholder="nome ou atendimento"
+                        value={{filter}}>
+                        <button type="submit"><img src="filter.svg" alt=""></button>
+                    </form>
+                </div>
+            </div>  
+        </div>
+
+        {% for instructor in instructors %}
+        
+            <div class="table-content">
+
+                <div class="avatar">
+                    <span style="background-image: url({{instructor.avatar_url}})"></span>
+                </div>
+
+                <div class="identification">
+                    <p>{{instructor.name}}</p>
+                </div>
+
+                <div class="service">
+                    {% for service in instructor.services %}
+                    <span>{{service}}</span>
+                    {% endfor %}
+                </div>
+
+                <div class="total-students">
+                    <span>{{instructor.total_students}}</span>
+                </div>
+
+                <div class="actions">
+                    <a href="/instructors/{{instructor.id}}"><img src="eye.svg" alt=""></a>
+                    <a href="/instructors/{{instructor.id}}/edit"><img src="edit.svg" alt=""></a>
+
+                    <form id="icon-delete"action="/instructors?_method=DELETE" method="post">
+                        <input type="hidden" name="id" value={{instructor.id}}>
+                        <button type="submit"><img src="trash-2.svg" alt=""></button>
+                    </form>
+                </div>
+            
+            </div>
+
+        {% endfor %}
+        
+    </div>
+
+    <div class="pagination-container">
+        <div class="pagination" data-page={{pagination.page}} data-total={{pagination.total}} data-filter={{filter}}>
+        </div>
+    </div>
+
+    <script>
+        const noFilter = document.querySelector(".no-filter")
+        const filter = document.querySelector(".filter")
+
+        function toggleFilter() {
+        noFilter.classList.add("filter-on");
+        filter.classList.remove("filter-on")
+        }
+    </script>
+
+{% endblock content %}

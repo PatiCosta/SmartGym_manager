@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+         {% block head %}
+         <title>SmartGym</title>
+         {% endblock %}
+
+        
+        <link rel="stylesheet" href="/style.css">
+    </head>
+
+    <body>
+        <header>
+            <div class="logo">
+                <img src="https://image.flaticon.com/icons/svg/1877/1877691.svg" alt="Logo">
+                <div class="logo-title">
+                    <h3>SmartGym</h3>
+                    <p>Manager</p>
+                </div>
+                
+            </div>
+        </header>
+        
+        <div class="menu">
+
+            <div class="links-menu">
+                <div class="link">
+                    <a href="/instructors">Instrutores</a>
+                </div>
+                <div class="link">
+                    <a href="/members">Membros</a>
+                </div>
+            </div>
+
+        </div>
+
+        {%block content%}
+
+        {% endblock %}
+
+        <script src="/scripts.js"></script>
+    </body>
+
+</html>

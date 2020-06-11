@@ -1,0 +1,84 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+    <div class="member table-container">
+        <div class="table-title">
+            <p>Membro</p>
+            <p>E-mail</p>
+            <p>Peso</p>
+            <p>Altura</p>
+            <div class="icon-table-title filter-on">
+                <div class="no-filter">
+                    <p><a href="/members/create"><img src="plus-square.svg" alt=""></a></p>
+                    <p><img src="filter.svg" alt="" onclick="toggleFilter()"></p>
+                </div>
+                <div class="filter filter-on">
+                    <form action="/members" method="GET">
+                        <input type="text" 
+                        name="filter" 
+                        placeholder="nome">
+                        <button type="submit"><img src="filter.svg" alt=""></button>
+                    </form>
+                </div>
+            </div>    
+        </div>
+
+        {% for member in members %}
+        
+            <div class="table-content">
+
+                <div class="avatar">
+                    <span style="background-image: url({{member.avatar_url}})"></span>
+                </div>
+
+                <div class="identification">
+                    <p>{{member.name}}</p>
+                </div>
+
+                <div class="instructor_name">
+                    <p>{{member.email}}</p>
+                </div>
+
+                <div class="weight">
+                    <p>{{member.weight}}Kg</p>
+                </div>
+
+                <div class="height">
+                    <p>{{member.height}}cm</p>
+                </div>
+
+                <div class="actions">
+                    <a href="/members/{{member.id}}"><img src="eye.svg" alt=""></a>
+                    <a href="/members/{{member.id}}/edit"><img src="edit.svg" alt=""></a>
+
+                    <form action="/members?_method=DELETE" method="post">
+                        <input type="hidden" name="id" value={{member.id}}>
+                        <button type="submit"><img src="trash-2.svg" alt=""></button>
+                    </form>
+                </div>
+            
+            </div>
+
+        {% endfor %}
+        
+    </div>
+
+    <div class="pagination-container">
+        <div class="pagination" data-page={{pagination.page}} data-total={{pagination.total}} data-filter={{filter}}>
+        </div>
+    </div>
+
+    
+    <script>
+        const noFilter = document.querySelector(".no-filter")
+        const filter = document.querySelector(".filter")
+
+        function toggleFilter() {
+        noFilter.classList.add("filter-on");
+        filter.classList.remove("filter-on")
+        }
+        
+    </script>
+
+{% endblock content %}
